@@ -1,3 +1,5 @@
+#!/usr/bin/php
+?>
 <?php
 
 echo "\033[0;32mstructurer \033[0;34mv1.0\033[0m\n\n";
