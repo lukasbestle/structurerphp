@@ -46,6 +46,9 @@ $structure = new Structurer("../test/testStructure");
 $worked = $destructure->destructurize("newStructure");
 
 // Overwrite an existing folder (second param: $force)
+// $force == true:                Remove the old folder
+// $force == false:               Add the new files in
+// $force == null (or not given): Warning
 $worked = $destructure->destructurize("newStructure", true);
 
 // The structure and destructure objects are totally interchangeable

@@ -24,11 +24,11 @@ class Structurer {
 		return (file_put_contents($filename, $this->dataStr) != false);
 	}
 	
-	public function destructurize($output, $force = false) {
+	public function destructurize($output, $force = null) {
 		if(file_exists($output)) {
-			if($force) {
+			if($force === true) {
 				$this->rrmdir($output);
-			} else {
+			} else if($force === null) {
 				throw new Exception('The folder ' . realpath($output) . ' already exists. Please remove it or use $force');
 			}
 		}
