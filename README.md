@@ -68,13 +68,13 @@ Save the structure file to a specific file:
 
 #### Destructurize
 
-Unpack into the current directory (must be empty!):
+Unpack into the current directory (will overwrite existing files):
 
 	structurer destructurize <FILENAME>.structure
 
 ----
 
-Unpack into a specific directory (must not exist or will be overwritten!):
+Unpack into a specific directory (will overwrite existing files):
 
 	structurer destructurize <FILENAME>.structure <PATH>
 
