@@ -17,7 +17,8 @@ This app gives you the ability to create a folder structure with blank files and
 ## The CLI
 
 `Structurer.php` has a CLI called `structurer` to save existing structures as `.structure` files - the files `Structurer.php` can then use to reproduce the same structure.
-The CLI can also reproduce the structures.
+
+The CLI can also reproduce the structures itself if you ever need that.
 
 Basically, it's the whole library with command line magic.
 
@@ -37,7 +38,7 @@ Please open a new shell session to use it.
 
 If you don't have sudo permission or don't want to install something, simply call the file `cli/cli.php` using
 
-	php cli/cli.php
+	php <PATH_TO_REPO>/cli/cli.php
 
 This is the same as calling the installed `structurer`.
 
@@ -73,7 +74,7 @@ Unpack into the current directory (must be empty!):
 
 ----
 
-Unpack into a specific directory (must be empty!):
+Unpack into a specific directory (must not exist or will be overwritten!):
 
 	structurer destructurize <FILENAME>.structure <PATH>
 
