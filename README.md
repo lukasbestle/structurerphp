@@ -1,4 +1,4 @@
-# Structurer.php
+# Structurer.php [![Build Status](https://travis-ci.org/vis7mac/structurerphp.png?branch=master)](https://travis-ci.org/vis7mac/structurerphp)
 
 > A prototyping library to build folder structure using JSON files. Like zip but without zip.
 
