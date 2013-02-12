@@ -103,7 +103,7 @@ class Structurer {
 	}
 	
 	private function buildStructure($output, $data) {
-		mkdir($output);
+		if(!file_exists($output)) mkdir($output);
 		
 		foreach($data as $name => $item) {
 			$name = $output . "/" . $name;
