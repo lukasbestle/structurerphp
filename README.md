@@ -47,35 +47,35 @@ You should now have `structurer` installed.
 
 Simply call `structurer` in your terminal to test if it works.
 
-#### Pack
+#### Structurize
 
 Pack the current directory and save a `<DIRNAME>.structure` file into it:
 
-	structurer pack
+	structurer structurize
 
 ----
 
 Pack a specific directory and save a `<DIRNAME>.structure` file into the current directory:
 
-	structurer pack <PATH>
+	structurer structurize <PATH>
 
 ----
 
 Save the structure file to a specific file:
 
-	structurer pack [<PATH>] > file.structure
+	structurer structurize [<PATH>] > file.structure
 
-#### Unpack
+#### Destructurize
 
 Unpack into the current directory (must be empty!):
 
-	structurer unpack <FILENAME>.structure
+	structurer destructurize <FILENAME>.structure
 
 ----
 
 Unpack into a specific directory (must be empty!):
 
-	structurer unpack <FILENAME>.structure <PATH>
+	structurer destructurize <FILENAME>.structure <PATH>
 
 
 ## The library
