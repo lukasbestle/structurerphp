@@ -1,18 +1,18 @@
 <?php
 
 // =====================================================
-// You can find the demo structure in test/testStructure
+// You can find the demo structure in /test/testStructure
 // =====================================================
 
 // Load the library
-require("structurer.php");
+require("../structurer.php");
 
 // =====================
 // Serialize a structure
 // =====================
 
 // The path to an existing folder
-$structure = new Structurer("test/testStructure");
+$structure = new Structurer("../test/testStructure");
 
 // You can do different things with that structure
 	// Save it as a .structure file
@@ -42,8 +42,11 @@ $structure = new Structurer("test/testStructure");
 	// Pass a file name (must have the extension ".structure" to get recognized)
 	$destructure = new Structurer("test.structure");
 
-// Now: Save that as a folder structure (folder must not exist or will be overwritten)
+// Now: Save that as a folder structure (folder must not exist)
 $worked = $destructure->destructurize("newStructure");
+
+// Overwrite an existing folder (second param: $force)
+$worked = $destructure->destructurize("newStructure", true);
 
 // The structure and destructure objects are totally interchangeable
 # $worked = $structure->destructurize("newStructure");

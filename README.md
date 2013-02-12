@@ -81,4 +81,4 @@ Unpack into a specific directory (must not exist or will be overwritten!):
 
 ## The library
 
-You can find some example code in `demo.php`.
+You can find some example code in `demo/demo.php`.
