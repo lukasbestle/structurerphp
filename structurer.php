@@ -33,7 +33,13 @@ class Structurer {
 	// ================
 	// Public functions
 	public function structurize($filename) {
-		return (file_put_contents($filename, $this->dataStr) != false);
+		if(function_exists("gzencode")) {
+			$data = gzencode($this->dataStr, 9);
+		} else {
+			$data = $this->dataStr;
+		}
+		
+		return (file_put_contents($filename, $data) != false);
 	}
 	
 	public function destructurize($output, $force = null) {
@@ -66,6 +72,17 @@ class Structurer {
 		if(!file_exists($file) || !is_file($file)) throw new RuntimeException("Wrong method call.");
 		
 		$data = file_get_contents($file);
+		if(!$this->is_JSON($data)) {
+			if(!function_exists("gzdecode")) {
+				throw new Exception("The contents of $file seem to be gzip encoded, but gzdecode() is not available.");
+			}
+			
+			$data = gzdecode($data);
+			
+			if($data == false) {
+				throw new Exception("The contents of $file are invalid.");
+			}
+		}
 		
 		$this->setData($data);
 	}

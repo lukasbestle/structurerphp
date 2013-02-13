@@ -36,9 +36,14 @@ if(!isset($argv[1])) {
 		
 		$filename = basename($dir) . ".structure";
 		
-		file_put_contents($filename, $structure);
+		$structure->structurize($filename);
 		echo "\033[0;32mSuccessfully saved the contents of \033[0;34m$dir\033[0;32m to \033[0;34m$filename\033[0;32m.\n";
 	} else {
+		if(function_exists("gzencode")) {
+			echo gzencode($structure);
+			die(0);
+		}
+		
 		echo $structure;
 	}
 } else if($argv[1] == "destructurize") {
@@ -48,13 +53,7 @@ if(!isset($argv[1])) {
 		die("\033[0;31m!! Please provide a valid .structure file!\033[0m\n");
 	}
 	
-	$data = json_decode(file_get_contents($argv[2]), true);
-	
-	if($data == null) {
-		die("\033[0;31m!! The .structure file is invalid JSON!\033[0m\n");
-	}
-	
-	$structure = new Structurer($data);
+	$structure = new Structurer($argv[2]);
 	
 	if(isset($argv[3])) {
 		$path = $argv[3];

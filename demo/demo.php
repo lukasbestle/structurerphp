@@ -27,6 +27,8 @@ $structure = new Structurer("../test/testStructure");
 	// Or just use one of these to get the string of JSON:
 	$string = (string)$structure;
 	file_put_contents("test2.structure", $structure);
+	
+	// Please note that manual reading of the data string does not create gzip-compressed files as structurize() does!
 
 // =======================
 // Deserialize a structure
