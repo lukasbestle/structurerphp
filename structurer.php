@@ -1,15 +1,15 @@
 <?php
 
 /**
- * structurer.php
- * A prototyping library to build folder structure using JSON files. Like zip but without zip.
+ * Structurer
+ * A prototyping library to build folder structures using JSON files. Like zip but without zip.
  *
  * @version 1.0
- * @author Lukas Bestle <lukas@lu-x.me>
- * @link http://lu-x.me/
+ * @author Lukas Bestle <http://lu-x.me>
+ * @link https://github.com/vis7mac/structurerphp
  * @copyright Copyright 2013 Lukas Bestle
  * @license http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- * @package Structurer
+ * @file structurer.php
  */
 
 class Structurer {
