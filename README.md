@@ -84,6 +84,11 @@ Unpack into a specific directory (will overwrite existing files):
 
 	structurer destructurize <FILENAME>.structure <PATH>
 
+#### Check
+
+Check if a `.structure` file fits to a directory:
+
+	structurer check <FILENAME>.structure <PATH>
 
 ## The library
 

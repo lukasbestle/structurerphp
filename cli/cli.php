@@ -11,7 +11,8 @@ if(!isset($argv[1])) {
 	echo "Usage: \033[0;32mstructurer \033[0;34m<command>\033[0m\n\nwhere \033[0;34m<command>\033[0m is one of:\n\n";
 	
 	echo "  \033[0;34mstructurize     \033[0m[-c] [PATH]                 Pack a folder and put save it as <DIRNAME>.structure.\n";
-	echo "  \033[0;34mdestructurize   \033[0mFILENAME.structure [PATH]   Unpack a .structure file to <PATH>.\n\n";
+	echo "  \033[0;34mdestructurize   \033[0mFILENAME.structure [PATH]   Unpack a .structure file to <PATH>.\n";
+	echo "  \003[0;34mcheck           \033[0mFILENAME.structure PATH     Check if a path fits a .structure file.\n\n";
 	
 	echo "You can find more information under \033[0;34m\033[4mhttps://github.com/vis7mac/structurer\033[0m.\n";
 } else if($argv[1] == "structurize") {
@@ -84,6 +85,22 @@ if(!isset($argv[1])) {
 	$structure->destructurize($path, false);
 	
 	echo "\033[0;32mSuccessfully saved the contents of \033[0;34m" . $argv[2] . "\033[0;32m to \033[0;34m$path\033[0;32m.\n";
+} else if($argv[1] == "check") {
+	if(!isset($argv[2]) || substr($argv[2], -10) != ".structure" || !file_exists($argv[2])) {
+		die("\033[0;31m!! Please provide a valid .structure file!\033[0m\n");
+	}
+	
+	if(!isset($argv[3]) || !is_dir($argv[3])) {
+		die("\033[0;31m!! Please provide a dir to check!\033[0m\n");
+	}
+	
+	$structure = new Structurer($argv[2]);
+	
+	if($structure->checkStructure($argv[3])) {
+		echo "\033[0;34m" . $argv[2] . "\033[0;32m fits to \033[0;34m" . $argv[3] . "\033[0;32m.\n";
+	} else {
+		echo "\033[0;34m" . $argv[2] . "\033[0;31m does not fit to \033[0;34m" . $argv[3] . "\033[0;31m.\n";
+	}
 } else {
 	echo "\033[0;31m!! Command not found! Please use \033[0;32mstructurer\033[0;31m for help.\033[0m\n";
 }
