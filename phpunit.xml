@@ -1,6 +1,6 @@
 <phpunit>
   <testsuites>
-    <testsuite name="Knowledge_Base">
+    <testsuite name="Structurer">
       <directory>test</directory>
     </testsuite>
   </testsuites>
