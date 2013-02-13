@@ -13,7 +13,7 @@ class StructurerTest extends PHPUnit_Framework_TestCase {
 	
 	public function setUp() {
 		$this->testData = file_get_contents("test/test.structure");
-		$this->testDataCompressed = file_get_contents("test/test2.structure");
+		$this->testDataCompressed = gzencode($this->testData, 9);
 	}
 	
 	public function testShouldLoadStructureAndSerializeIt() {
