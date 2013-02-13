@@ -4,7 +4,7 @@
  * Structurer
  * A prototyping library to build folder structures using JSON files. Like zip but without zip.
  *
- * @version 1.1
+ * @version 1.1.1
  * @author Lukas Bestle <http://lu-x.me>
  * @link https://github.com/vis7mac/structurerphp
  * @copyright Copyright 2013 Lukas Bestle
@@ -51,9 +51,7 @@ class Structurer {
 			}
 		}
 		
-		$this->buildStructure($output, $this->data);
-		
-		return true;
+		return $this->buildStructure($output, $this->data) && $this->checkStructure($output);
 	}
 	
 	public function checkStructure($path) {
@@ -136,7 +134,9 @@ class Structurer {
 	}
 	
 	private function buildStructure($output, $data) {
-		if(!file_exists($output)) mkdir($output);
+		if(!file_exists($output)) {
+			if(!mkdir($output)) return false;
+		}
 		
 		foreach($data as $name => $item) {
 			$name = $output . "/" . $name;
@@ -144,9 +144,11 @@ class Structurer {
 			if(is_array($item)) {
 				$this->buildStructure($name, $item);
 			} else {
-				file_put_contents($name, $item);
+				if(!file_put_contents($name, $item)) return false;
 			}
 		}
+		
+		return true;
 	}
 	
 	private function getStructure($folder) {
