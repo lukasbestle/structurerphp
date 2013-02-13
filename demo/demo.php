@@ -58,3 +58,16 @@ $worked = $destructure->destructurize("newStructure", true);
 // The structure and destructure objects are totally interchangeable
 # $worked = $structure->destructurize("newStructure");
 # $worked = $destructure->structurize("test.structure");
+
+// =================
+// Check a structure
+// =================
+
+// You can check if the folder structure of a structure changed.
+// This will check for files to be there - not the contents. Added files are ignored.
+
+if($structure->checkStructure("newStructure")) {
+	echo "No change";
+} else {
+	echo "Something has changed.";
+}

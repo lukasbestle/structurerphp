@@ -56,6 +56,35 @@ class StructurerTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($destructure1->destructurize("demo/newStructure", true));
 	}
 	
+	public function testShouldCheckValidityWhenNothingChanged() {
+		$structure = new Structurer($this->testData);
+		
+		$this->assertTrue($structure->destructurize("demo/newStructure"));
+		
+		$this->assertTrue($structure->checkStructure("demo/newStructure"));
+	}
+	
+	public function testShouldCheckValidityForAddedFiles() {
+		$structure = new Structurer($this->testData);
+		
+		$this->assertTrue($structure->destructurize("demo/newStructure"));
+		
+		touch("demo/newStructure/anotherAddedFile.txt");
+		file_put_contents("demo/newStructure/file.txt", "Some other content");
+		
+		$this->assertTrue($structure->checkStructure("demo/newStructure"));
+	}
+	
+	public function testShouldCheckValidityForRemovedFiles() {
+		$structure = new Structurer($this->testData);
+		
+		$this->assertTrue($structure->destructurize("demo/newStructure"));
+		
+		unlink("demo/newStructure/file.txt");
+		
+		$this->assertFalse($structure->checkStructure("demo/newStructure"));
+	}
+	
 	private function rrmdir($dir) {
 		if(is_dir($dir)) {
 			$objects = scandir($dir);
