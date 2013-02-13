@@ -13,6 +13,7 @@ class StructurerTest extends PHPUnit_Framework_TestCase {
 	
 	public function setUp() {
 		$this->testData = file_get_contents("test/test.structure");
+		$this->testDataCompressed = file_get_contents("test/test2.structure");
 	}
 	
 	public function testShouldLoadStructureAndSerializeIt() {
@@ -22,8 +23,11 @@ class StructurerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($this->testData, (string)$structure);
 		$this->assertEquals(json_decode($this->testData, true), $structure->data);
 		
-		$this->assertTrue($structure->structurize("demo/test.structure"));
+		$this->assertTrue($structure->structurize("demo/test.structure", false));
 		$this->assertEquals($this->testData, file_get_contents("demo/test.structure"));
+		
+		$this->assertTrue($structure->structurize("demo/test2.structure"));
+		$this->assertEquals($this->testDataCompressed, file_get_contents("demo/test2.structure"));
 	}
 	
 	public function testShouldDeserializeStructure() {

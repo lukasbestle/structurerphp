@@ -16,7 +16,9 @@ $structure = new Structurer("../test/testStructure");
 
 // You can do different things with that structure
 	// Save it as a .structure file
-	$worked = $structure->structurize("test.structure");
+	// $compress: Compress the file using gzencode()? (If zlib is not available, Structurer will not encode)
+	$compress = false;
+	$worked = $structure->structurize("test.structure", $compress);
 	
 	// Get the array data
 	$array = $structure->data;

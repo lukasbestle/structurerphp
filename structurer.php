@@ -32,8 +32,8 @@ class Structurer {
 	
 	// ================
 	// Public functions
-	public function structurize($filename) {
-		if(function_exists("gzencode")) {
+	public function structurize($filename, $compress=true) {
+		if(function_exists("gzencode") && $compress) {
 			$data = gzencode($this->dataStr, 9);
 		} else {
 			$data = $this->dataStr;
