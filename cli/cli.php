@@ -10,18 +10,36 @@ if(!isset($argv[1])) {
 	
 	echo "Usage: \033[0;32mstructurer \033[0;34m<command>\033[0m\n\nwhere \033[0;34m<command>\033[0m is one of:\n\n";
 	
-	echo "  \033[0;34mstructurize     \033[0m[PATH]                      Pack a folder and put save it as <DIRNAME>.structure.\n";
+	echo "  \033[0;34mstructurize     \033[0m[-c] [PATH]                 Pack a folder and put save it as <DIRNAME>.structure.\n";
 	echo "  \033[0;34mdestructurize   \033[0mFILENAME.structure [PATH]   Unpack a .structure file to <PATH>.\n\n";
 	
 	echo "You can find more information under \033[0;34m\033[4mhttps://github.com/vis7mac/structurer\033[0m.\n";
 } else if($argv[1] == "structurize") {
 	// Structurize
 	
-	if(isset($argv[2])) {
-		if(is_dir($argv[2])) {
-			$dir = realpath($argv[2]);
+	$argvClean = array_slice($argv, 2);
+	
+	$args = array();
+	foreach($argvClean as $arg) {
+		if(substr($arg, 0, 1) == "-") {
+			if($arg == "-c") {
+				$args["compress"] = true;
+			}
 		} else {
-			die("\033[0;31m!! Could not find '" . $argv[2] . "'!\033[0m\n");
+			$args["path"] = $arg;
+		}
+	}
+	if(isset($args["compress"])) {
+		$compress = true;
+	} else {
+		$compress = false;
+	}
+	
+	if(isset($args["path"])) {
+		if(is_dir($args["path"])) {
+			$dir = realpath($args["path"]);
+		} else {
+			die("\033[0;31m!! Could not find '" . $args["path"] . "'!\033[0m\n");
 		}
 	} else {
 		$dir = getcwd();
@@ -36,11 +54,11 @@ if(!isset($argv[1])) {
 		
 		$filename = basename($dir) . ".structure";
 		
-		$structure->structurize($filename);
+		$structure->structurize($filename, $compress);
 		echo "\033[0;32mSuccessfully saved the contents of \033[0;34m$dir\033[0;32m to \033[0;34m$filename\033[0;32m.\n";
 	} else {
-		if(function_exists("gzencode")) {
-			echo gzencode($structure);
+		if(function_exists("gzencode") && $compress) {
+			echo gzencode($structure, 9);
 			die(0);
 		}
 		

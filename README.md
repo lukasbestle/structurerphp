@@ -66,6 +66,12 @@ Save the structure file to a specific file:
 
 	structurer structurize [<PATH>] > file.structure
 
+----
+
+Compress the structure file and save it:
+
+	structurer structurize -c [<PATH>] [> file.structure]
+
 #### Destructurize
 
 Unpack into the current directory (will overwrite existing files):
