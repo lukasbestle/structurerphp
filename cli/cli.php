@@ -12,7 +12,7 @@ if(!isset($argv[1])) {
 	
 	echo "  \033[0;34mstructurize     \033[0m[-c] [PATH]                 Pack a folder and put save it as <DIRNAME>.structure.\n";
 	echo "  \033[0;34mdestructurize   \033[0mFILENAME.structure [PATH]   Unpack a .structure file to <PATH>.\n";
-	echo "  \003[0;34mcheck           \033[0mFILENAME.structure PATH     Check if a path fits a .structure file.\n\n";
+	echo "  \033[0;34mcheck           \033[0mFILENAME.structure PATH     Check if a path fits a .structure file.\n\n";
 	
 	echo "You can find more information under \033[0;34m\033[4mhttps://github.com/vis7mac/structurer\033[0m.\n";
 } else if($argv[1] == "structurize") {
