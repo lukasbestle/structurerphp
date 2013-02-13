@@ -11,7 +11,7 @@ class StructurerTest extends PHPUnit_Framework_TestCase {
 		$this->rrmdir("demo/test2.structure");
 	}
 	
-	public function setUp() {
+	public function __construct() {
 		$this->testData = file_get_contents("test/test.structure");
 		$this->testDataCompressed = gzencode($this->testData, 9);
 	}
