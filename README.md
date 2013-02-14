@@ -88,7 +88,11 @@ Unpack into a specific directory (will overwrite existing files):
 
 Check if a `.structure` file fits to a directory:
 
-	structurer check <FILENAME>.structure <PATH>
+	structurer check <FILENAME>.structure <PATH> [-d] [-a] [-c]
+
+- `-d`: Check file deletions (activated by default)
+- `-a`: Check new files
+- `-c`: Check file changes
 
 ## The library
 

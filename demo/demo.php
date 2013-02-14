@@ -65,8 +65,31 @@ $worked = $destructure->destructurize("newStructure", true);
 
 // You can check if the folder structure of a structure changed.
 // This will check for files to be there - not the contents. Added files are ignored.
+$result = $structure->checkStructure("newStructure");
 
-if($structure->checkStructure("newStructure")) {
+// You can add operators to check different things
+	// Check file contents
+	$result = $structure->checkStructure("newStructure", STRUCTURER_CHANGED);
+	
+	// Check file deletions (default)
+	$result = $structure->checkStructure("newStructure", STRUCTURER_DELETED);
+	
+	// Check file additions
+	$result = $structure->checkStructure("newStructure", STRUCTURER_ADDED);
+	
+	// Multiple at once
+	$result = $structure->checkStructure("newStructure", STRUCTURER_ADDED | STRUCTURER_DELETED);
+	
+	// Everything (= no change allowed)
+	$result = $structure->checkStructure("newStructure", STRUCTURER_ADDED | STRUCTURER_DELETED | STRUCTURER_CHANGED);
+	$result = $structure->checkStructure("newStructure", STRUCTURER_EVERYTHING);
+
+// $result is a StructurerScore object
+// You can get the score as a number from 0-∞ (the higher the more changes) like this:
+$score = $result->score;
+
+// You can also check if there was a change (true means $score == 0, false means $score > 0):
+if($result->bool) {
 	echo "No change";
 } else {
 	echo "Something has changed.";

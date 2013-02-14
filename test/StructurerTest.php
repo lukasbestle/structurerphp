@@ -61,7 +61,15 @@ class StructurerTest extends PHPUnit_Framework_TestCase {
 		
 		$this->assertTrue($structure->destructurize("demo/newStructure"));
 		
-		$this->assertTrue($structure->checkStructure("demo/newStructure"));
+		$this->assertTrue($structure->checkStructure("demo/newStructure")->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_ADDED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_CHANGED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_ADDED | STRUCTURER_CHANGED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED | STRUCTURER_CHANGED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED | STRUCTURER_ADDED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED | STRUCTURER_ADDED | STRUCTURER_CHANGED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_EVERYTHING)->bool);
 	}
 	
 	public function testShouldCheckValidityForAddedFiles() {
@@ -70,9 +78,16 @@ class StructurerTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($structure->destructurize("demo/newStructure"));
 		
 		touch("demo/newStructure/anotherAddedFile.txt");
-		file_put_contents("demo/newStructure/file.txt", "Some other content");
 		
-		$this->assertTrue($structure->checkStructure("demo/newStructure"));
+		$this->assertTrue($structure->checkStructure("demo/newStructure")->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_ADDED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_CHANGED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_ADDED | STRUCTURER_CHANGED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED | STRUCTURER_CHANGED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED | STRUCTURER_ADDED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED | STRUCTURER_ADDED | STRUCTURER_CHANGED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_EVERYTHING)->bool);
 	}
 	
 	public function testShouldCheckValidityForRemovedFiles() {
@@ -82,7 +97,33 @@ class StructurerTest extends PHPUnit_Framework_TestCase {
 		
 		unlink("demo/newStructure/file.txt");
 		
-		$this->assertFalse($structure->checkStructure("demo/newStructure"));
+		$this->assertFalse($structure->checkStructure("demo/newStructure")->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_ADDED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_CHANGED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_ADDED | STRUCTURER_CHANGED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED | STRUCTURER_CHANGED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED | STRUCTURER_ADDED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED | STRUCTURER_ADDED | STRUCTURER_CHANGED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_EVERYTHING)->bool);
+	}
+	
+	public function testShouldCheckValidityForChangedFiles() {
+		$structure = new Structurer($this->testData);
+		
+		$this->assertTrue($structure->destructurize("demo/newStructure"));
+		
+		file_put_contents("demo/newStructure/file.txt", "Some new contents");
+		
+		$this->assertTrue($structure->checkStructure("demo/newStructure")->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_ADDED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_CHANGED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_ADDED | STRUCTURER_CHANGED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED | STRUCTURER_CHANGED)->bool);
+		$this->assertTrue($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED | STRUCTURER_ADDED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_DELETED | STRUCTURER_ADDED | STRUCTURER_CHANGED)->bool);
+		$this->assertFalse($structure->checkStructure("demo/newStructure", STRUCTURER_EVERYTHING)->bool);
 	}
 	
 	private function rrmdir($dir) {

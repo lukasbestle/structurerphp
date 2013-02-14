@@ -12,6 +12,11 @@
  * @file structurer.php
  */
 
+define("STRUCTURER_ADDED", 1);
+define("STRUCTURER_DELETED", 2);
+define("STRUCTURER_CHANGED", 4);
+define("STRUCTURER_EVERYTHING", STRUCTURER_ADDED | STRUCTURER_DELETED | STRUCTURER_CHANGED);
+
 class Structurer {
 	public $data = array();
 	public $dataStr = "{}";
@@ -54,8 +59,8 @@ class Structurer {
 		return $this->buildStructure($output, $this->data) && $this->checkStructure($output);
 	}
 	
-	public function checkStructure($path) {
-		return $this->checkValidity($this->data, $path);
+	public function checkStructure($path, $bitmask=STRUCTURER_DELETED) {
+		return new StructurerScore($this->checkValidity($this->data, $path, $bitmask));
 	}
 	
 	// ===========
@@ -173,17 +178,36 @@ class Structurer {
 		return ($file == "." || $file == "..");
 	}
 	
-	public function checkValidity($data, $path) {
+	public function checkValidity($data, $path, $bitmask) {
+		$score = 0;
 		foreach($data as $name => $item) {
 			if(is_array($item)) {
-				if(!is_dir($path . "/" . $name)) return false;
-				if(!$this->checkValidity($item, $path . "/" . $name)) return false;
+				if(($bitmask & STRUCTURER_DELETED) && !is_dir($path . "/" . $name)) $score++;
+				$score += $this->checkValidity($item, $path . "/" . $name, $bitmask);
 				continue;
 			}
 			
-			if(!is_file($path . "/" . $name)) return false;
+			if(($bitmask & STRUCTURER_DELETED) && !is_file($path . "/" . $name)) $score++;
+			
+			if(($bitmask & STRUCTURER_CHANGED) && is_file($path . "/" . $name) && file_get_contents($path . "/" . $name) != $item) $score++;
+		}
+		if($bitmask & STRUCTURER_ADDED) {
+			foreach(scandir($path) as $file) {
+				if($this->is_dot($file)) continue;
+				if(!isset($data[$file])) $score++;
+			}
 		}
 		
-		return true;
+		return $score;
+	}
+}
+
+class StructurerScore {
+	public $score;
+	public $bool;
+	
+	public function __construct($score) {
+		$this->bool = ($score == 0)? true : false;
+		$this->score = $score;
 	}
 }
