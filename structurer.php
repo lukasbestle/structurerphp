@@ -106,7 +106,7 @@ class Structurer {
 		}
 		
 		// Fix encoding
-		$this->data = mb_check_encoding($this->data, 'UTF-8') ? $this->data : utf8_encode($this->data);
+		$this->data = array_walk($this->data, array($this, "utfEncode"));
 		
 		$this->dataStr = json_encode($this->data);
 	}
@@ -181,7 +181,7 @@ class Structurer {
 		return ($file == "." || $file == "..");
 	}
 	
-	public function checkValidity($data, $path, $bitmask) {
+	private function checkValidity($data, $path, $bitmask) {
 		$score = 0;
 		foreach($data as $name => $item) {
 			if(is_array($item)) {
@@ -202,6 +202,14 @@ class Structurer {
 		}
 		
 		return $score;
+	}
+	
+	private function utfEncode(&$data, $key) {
+		if(is_array($data)) {
+			array_walk($data, array($this, "utfEncode"));
+		} else {
+			$data = utf8_encode($data);
+		}
 	}
 }
 
