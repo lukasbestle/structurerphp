@@ -4,7 +4,7 @@
  * Structurer
  * A prototyping library to build folder structures using JSON files. Like zip but without zip.
  *
- * @version 1.2
+ * @version 1.2.1
  * @author Lukas Bestle <http://lu-x.me>
  * @link https://github.com/vis7mac/structurerphp
  * @copyright Copyright 2013 Lukas Bestle
@@ -104,6 +104,9 @@ class Structurer {
 		} else {
 			throw new RuntimeException("Wrong method call.");
 		}
+		
+		// Fix encoding
+		$this->data = mb_check_encoding($this->data, 'UTF-8') ? $this->data : utf8_encode($this->data);
 		
 		$this->dataStr = json_encode($this->data);
 	}
