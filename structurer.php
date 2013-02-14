@@ -168,7 +168,13 @@ class Structurer {
 			if($this->is_dot($item)) continue;
 			
 			if(is_file($path)) {
-				$data[$item] = file_get_contents($path);
+				$contents = @file_get_contents($path);
+				
+				if(is_string($contents)) {
+					$data[$item] = $contents;
+				} else {
+					throw new Exception("No permission to open the file $path.");
+				}
 			} else {
 				$data[$item] = $this->getStructure($path);
 			}
