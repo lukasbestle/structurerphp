@@ -5,7 +5,7 @@ ini_set("memory_limit", "512M");
 
 require("../structurer.php");
 
-if(posix_isatty(STDOUT)) echo "\033[0;32mstructurer \033[0;34mv1.2.1\033[0m\n\n";
+if(posix_isatty(STDOUT)) echo "\033[0;32mstructurer \033[0;34mv1.2.2\033[0m\n\n";
 
 if(!isset($argv[1])) {
 	// Home screen

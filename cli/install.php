@@ -2,7 +2,7 @@
 ?>
 <?php
 
-echo "\033[0;32mstructurer \033[0;34mv1.2.1\033[0m\n\n";
+echo "\033[0;32mstructurer \033[0;34mv1.2.2\033[0m\n\n";
 
 echo "Getting the CLI...\n";
 $cli = file_get_contents("https://raw.github.com/vis7mac/structurerphp/master/cli/cli.php");
