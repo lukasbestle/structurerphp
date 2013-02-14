@@ -20,27 +20,22 @@ if(!isset($argv[1])) {
 	
 	$argvClean = array_slice($argv, 2);
 	
-	$args = array();
+	$compress = false;
 	foreach($argvClean as $arg) {
 		if(substr($arg, 0, 1) == "-") {
 			if($arg == "-c") {
-				$args["compress"] = true;
+				$compress = true;
 			}
 		} else {
-			$args["path"] = $arg;
+			$path = $arg;
 		}
 	}
-	if(isset($args["compress"])) {
-		$compress = true;
-	} else {
-		$compress = false;
-	}
 	
-	if(isset($args["path"])) {
-		if(is_dir($args["path"])) {
-			$dir = realpath($args["path"]);
+	if(isset($path)) {
+		if(is_dir($path)) {
+			$dir = realpath($path);
 		} else {
-			die("\033[0;31m!! Could not find '" . $args["path"] . "'!\033[0m\n");
+			die("\033[0;31m!! Could not find '" . $path . "'!\033[0m\n");
 		}
 	} else {
 		$dir = getcwd();
@@ -86,6 +81,8 @@ if(!isset($argv[1])) {
 	
 	echo "\033[0;32mSuccessfully saved the contents of \033[0;34m" . $argv[2] . "\033[0;32m to \033[0;34m$path\033[0;32m.\n";
 } else if($argv[1] == "check") {
+	// Check
+	
 	if(!isset($argv[2]) || substr($argv[2], -10) != ".structure" || !file_exists($argv[2])) {
 		die("\033[0;31m!! Please provide a valid .structure file!\033[0m\n");
 	}
