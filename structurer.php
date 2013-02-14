@@ -106,7 +106,7 @@ class Structurer {
 		}
 		
 		// Fix encoding
-		$this->data = array_walk($this->data, array($this, "utfEncode"));
+		array_walk($this->data, array($this, "utfEncode"));
 		
 		$this->dataStr = json_encode($this->data);
 	}
