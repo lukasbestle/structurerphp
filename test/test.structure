@@ -1,1 +1,1 @@
-{"file.txt":"Cool content!","folder":{"a second folder":{"GermanU\u0308mla\u0308uts":{"afile.txt":"This file contains some \u00c3\u009cs and \u00c3\u0084s and \u00c3\u0096s and a ~."}},"another folder":{"test.html":"No real HTML here!"}},"folder2":{"file.txt":"Cool content!"}}
+{"file.txt":"Cool content!","folder":{"a second folder":{"GermanU\u0308mla\u0308uts":{"afile.txt":"This file contains some \u00dcs and \u00c4s and \u00d6s and a ~."}},"another folder":{"test.html":"No real HTML here!"}},"folder2":{"file.txt":"Cool content!"}}

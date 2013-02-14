@@ -208,7 +208,7 @@ class Structurer {
 		if(is_array($data)) {
 			array_walk($data, array($this, "utfEncode"));
 		} else {
-			$data = utf8_encode($data);
+			$data = mb_check_encoding($data, 'UTF-8') ? $data : utf8_encode($data);
 		}
 	}
 }
